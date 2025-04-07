@@ -1,7 +1,15 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NavComponent } from './nav/nav.component';
+import { AppRoutingModule } from './app-routing.module';
+
 
 <main class="main">
 
   <header>
+    <nav-app></nav-app>
+    <router-outlet></router-outlet>
     <h1>MJIT LLC | Homepage</h1>
   </header>
 

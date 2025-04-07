@@ -1,10 +1,12 @@
-<p>nav works!</p>
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 <main>
     <nav id="nav">
 
         <div class="logo">
-            <img src="../assets/logo.jpg" alt="Logo" />
+            <img id="nav-logo" src="img/logo.jpg" alt="MJIT LLC Logo" />
             <h1>MJIT LLC</h1>
         </div>
 
@@ -16,3 +18,5 @@
         
     </nav>
 </main>
+
+<router-outlet></router-outlet>

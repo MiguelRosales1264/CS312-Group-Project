@@ -8,9 +8,12 @@ import { HomeComponent } from "./home/home.component";
   imports: [RouterOutlet, NavComponent, HomeComponent],
   template: `
     <app-nav />
+
     <main>
       <app-home />
     </main>
+
+    <router-outlet></router-outlet>
   `,
   styleUrl: './app.component.css'
 })

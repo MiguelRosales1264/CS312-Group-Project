@@ -17,6 +17,7 @@
     padding: 1rem;
     border-radius: 1rem;
     gap: 2rem;
+    align-items: center;
 }
 
 .person>img {

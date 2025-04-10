@@ -1,10 +1,14 @@
 .home-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
     padding: 20px;
     background-color: lightgrey;
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.home-logo img {
+    border-radius: 50%;
 }

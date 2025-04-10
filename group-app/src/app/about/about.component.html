@@ -2,11 +2,12 @@
     <div class="people">
         <h2>{{ title }}</h2>
         <p>{{ description }}</p>
+
         <ul>
-            <li class="person" *ngFor="let person of people">
-                <img [src]="person.image" alt="{{ person.name }}">
-                <h3>{{ person.name }}</h3>
-                <p>{{ person.description }}</p>
+            <li class="person">
+                <img src="./assets/img/miguel.jpg" alt="Miguel Rosales photo">
+                <h3>Miguel Rosales</h3>
+                <p>I am Miguel Rosales</p>
             </li>
         </ul>
     </div>

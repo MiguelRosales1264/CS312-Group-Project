@@ -18,6 +18,25 @@
     transition: color 0.3s;
 }
 
+.nav-link {
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.logo {
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #007bff;
+    cursor: pointer;
+}
 
 .nav {
     display: flex;

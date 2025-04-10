@@ -1,7 +1,13 @@
-@for (person of aboutPersons(); track $index) {
-    <div class="about-person">
-        <img [src]="person.imageUrl" alt="{{ person.name }}" />
-        <h3>{{ person.name }}</h3>
-        <p>{{ person.description }}</p>
+<section class="about">
+    <div class="people">
+        <h2>{{ title }}</h2>
+        <p>{{ description }}</p>
+        <ul>
+            <li class="person" *ngFor="let person of people">
+                <img [src]="person.image" alt="{{ person.name }}">
+                <h3>{{ person.name }}</h3>
+                <p>{{ person.description }}</p>
+            </li>
+        </ul>
     </div>
-}
+</section>

@@ -1,16 +1,28 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ColorGenerationComponent } from './color-generation/color-generation.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'about', component: AboutComponent },
-    { path: 'color-generation', component: ColorGenerationComponent },
+    {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => { 
+            return import('./home/home.component').then(m => m.HomeComponent)},
+    },
+    {
+        path: 'about',
+        pathMatch: 'full',
+        loadComponent: () => { 
+            return import('./about/about.component').then(m => m.AboutComponent)},
+    }
+    {
+        path: 'color-generation',
+        pathMatch: 'full',
+        loadComponent: () => { 
+            return import('./color-generation/color-generation.component').then(m => m.ColorGenerationComponent)},
+    }
 ];
 
-@NgModule({
+@NgModule({ 
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })

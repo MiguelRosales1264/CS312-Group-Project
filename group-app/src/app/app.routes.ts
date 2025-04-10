@@ -13,7 +13,7 @@ export const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () => { 
             return import('./about/about.component').then(m => m.AboutComponent)},
-    }
+    },
     {
         path: 'color-generation',
         pathMatch: 'full',

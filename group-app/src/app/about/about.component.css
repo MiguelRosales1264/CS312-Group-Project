@@ -1,3 +1,8 @@
+.about-header {
+    text-align: center;
+    font-size: 1.4rem;
+}
+
 .people ul {
     list-style: none;
     padding: 0;

@@ -9,5 +9,5 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 })
 export class AboutComponent {
   title = 'About Us';
-  description = 'This is the about page of our application.';
+  description = 'Meet the Team';
 }

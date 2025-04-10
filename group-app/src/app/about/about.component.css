@@ -1,0 +1,28 @@
+.people ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    font-size: 1.5rem;
+    /* text-align: center; */
+}
+
+.person {
+    display: flex;
+    background-color: coral;
+    padding: 1rem;
+    border-radius: 1rem;
+    gap: 2rem;
+}
+
+.person>img {
+    border-radius: 50%;
+}
+
+.person>div {
+    padding: 1rem;
+}

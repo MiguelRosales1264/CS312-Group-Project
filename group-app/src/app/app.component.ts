@@ -6,7 +6,7 @@ import { NavComponent } from "./nav/nav.component";
   selector: 'app-root',
   imports: [RouterOutlet, NavComponent],
   template: `
-    <app-nav title />
+    <app-nav />
 
     <main>
       <router-outlet />

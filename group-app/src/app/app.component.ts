@@ -12,8 +12,6 @@ import { HomeComponent } from "./home/home.component";
     <main>
       <app-home />
     </main>
-
-    <router-outlet></router-outlet>
   `,
   styleUrl: './app.component.css'
 })

@@ -2,10 +2,31 @@
     background-color: lightgrey;
     padding: 20px;
     border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px lightskyblue;
+}
+
+#rows, #columns, #colors {
+    padding: 2px;
+    border-radius: 10px;
+    border-color: lightskyblue;
 }
 
 .generate {
     background-color: lightskyblue;
     padding: 5px;
-    border-radius: 16px;
+    border-radius: 10px;
+}
+
+.generate:hover {
+    background-color: rgb(93, 160, 186);
+}
+
+#colorsTable {
+    width: 100%;
+    padding: 10px;
+    background-color: lightgrey;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

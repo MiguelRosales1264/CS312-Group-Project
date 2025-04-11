@@ -42,9 +42,10 @@
     </div>
   </form>
 </div>
+
 <div *ngIf="colors > 0">
   <!-- First Table -->
-  <table style="width: 100%; border-collapse: collapse;">
+  <table id = "colorsTable">
     <tbody>
       <tr *ngFor="let color of colorArray; let i = index">
         <!-- Left Column -->

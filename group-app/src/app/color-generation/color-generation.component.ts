@@ -19,6 +19,7 @@ export class ColorGenerationComponent {
   columns: number | null = null;
   colorsInput: number | null = null;
   inputErrorMessage: string = '';
+  tableData:string[][] = [];
 
   validateInput(field: string): void {
     if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {
@@ -47,6 +48,10 @@ export class ColorGenerationComponent {
       this.selectedRow = null;
       this.errorMessage = ''; // Clear any previous error message
     }
+
+    this.tableData = Array.from({ length: this.rows! + 1}, () =>
+      Array.from({ length: this.columns! + 1}, () => '[]')
+    );
   }
 
   selectRow(index: number): void {

@@ -69,3 +69,15 @@
     </tbody>
   </table>
 </div>
+
+<div *ngIf="tableData.length > 0">
+  <table id="generatedTable">
+    <tbody>
+      <tr *ngFor="let row of tableData; let i = index">
+        <td *ngFor="let cell of row; let j = index" style="width: 40px; height: 40px; text-align: center;">
+          {{ cell }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

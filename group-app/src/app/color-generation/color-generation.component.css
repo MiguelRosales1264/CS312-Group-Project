@@ -1,0 +1,11 @@
+#values {
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.generate {
+    background-color: lightskyblue;
+    padding: 5px;
+    border-radius: 16px;
+}

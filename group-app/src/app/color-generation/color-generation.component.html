@@ -1,49 +1,51 @@
-<form (submit)="generateTables($event)">
-    <!-- Row Input -->
-  <label for="rows">Rows (1-1000)</label>
-  <input
-    id="rows"
-    type="number"
-    name="rows"
-    [(ngModel)]="rows"
-    (blur)="validateInput('rows')"
-    required
-  > <br>
+<div id="values">
+  <form (submit)="generateTables($event)">
+      <!-- Row Input -->
+    <label for="rows">Rows (1-1000)&nbsp; &nbsp; &nbsp;</label>
+    <input
+      id="rows"
+      type="number"
+      name="rows"
+      [(ngModel)]="rows"
+      (blur)="validateInput('rows')"
+      required
+    > <br> <br>
 
-  <!-- Column Input -->
-  <label for="columns">Columns (1-702)</label>
-  <input
-    id="columns"
-    type="number"
-    name="columns"
-    [(ngModel)]="columns"
-    (blur)="validateInput('columns')"
-    required
-  > <br>
+    <!-- Column Input -->
+    <label for="columns">Columns (1-702) &nbsp;</label>
+    <input
+      id="columns"
+      type="number"
+      name="columns"
+      [(ngModel)]="columns"
+      (blur)="validateInput('columns')"
+      required
+    > <br> <br>
 
-  <!-- Color Input -->
-  <label for="colors">Colors (1-10)</label>
-  <input
-    id="colors"
-    type="number"
-    name="colors"
-    [(ngModel)]="colorsInput"
-    (blur)="validateInput('colors')"
-    required
-  > <br>
+    <!-- Color Input -->
+    <label for="colors">Colors (1-10) &nbsp; &nbsp; &nbsp; &nbsp;</label>
+    <input
+      id="colors"
+      type="number"
+      name="colors"
+      [(ngModel)]="colorsInput"
+      (blur)="validateInput('colors')"
+      required
+    > <br> <br>
 
-  <!-- Generate Button -->
-  <input type="submit" value="Generate"> <br>
+    <!-- Generate Button -->
+    <input type="submit" value="Generate" class="generate"> <br>
 
-  <!-- Error Message -->
-  <div *ngIf="inputErrorMessage" style="color: red; margin-top: 10px;">
-    {{ inputErrorMessage }}
-  </div>
-</form>
+    <!-- Error Message -->
+    <div *ngIf="inputErrorMessage" style="color: red; margin-top: 10px;">
+      {{ inputErrorMessage }}
+    </div>
+  </form>
+</div>
 
 <div *ngIf="colors > 0">
   <!-- First Table -->
-  <table style="width: 100%; border-collapse: collapse;">
+  <table id = "colorsTable">
     <tbody>
       <tr *ngFor="let color of colorArray; let i = index">
         <!-- Left Column -->
@@ -67,3 +69,26 @@
     </tbody>
   </table>
 </div>
+
+<div *ngIf="tableData.length > 0">
+  <table id="generatedTable">
+    <tbody>
+      <tr *ngFor="let row of tableData; let i = index">
+        <td *ngFor="let cell of row; let j = index" style="width: 40px; height: 40px; text-align: center;">
+          {{ cell }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<table>
+  <tr *ngFor="let row of tableData; let i = index">
+    <td *ngFor="let cell of row; let j = index"
+        (click)="fillCell(i, j)"
+        [ngStyle]="{'background-color': cellColors[i][j]}"
+        style="width: 30px; height: 30px; text-align: center; cursor: pointer;">
+      {{ cell }}
+    </td>
+  </tr>
+</table>

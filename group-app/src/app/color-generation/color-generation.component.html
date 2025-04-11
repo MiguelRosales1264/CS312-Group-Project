@@ -81,3 +81,22 @@
     </tbody>
   </table>
 </div>
+
+<table>
+  <tr *ngFor="let row of tableData; let i = index">
+    <td *ngFor="let cell of row; let j = index"
+        (click)="fillCell(i, j)"
+        [ngStyle]="{'background-color': cellColors[i][j]}"
+        style="width: 30px; height: 30px; text-align: center; cursor: pointer;">
+      {{ cell }}
+    </td>
+  </tr>
+</table>
+
+<select *ngFor="let color of colorArray; let i = index"
+        (change)="selectRow(i)">
+  <option *ngFor="let option of colorOptions" [value]="option" [disabled]="isColorDisabled(option, i)">
+    {{ option }}
+  </option>
+</select>
+

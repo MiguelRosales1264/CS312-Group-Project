@@ -1,11 +1,76 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-color-generation',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './color-generation.component.html',
-  styleUrl: './color-generation.component.css'
+  styleUrls: ['./color-generation.component.css']
 })
 export class ColorGenerationComponent {
+  colors: number = 0;
+  colorArray: string[] = [];
+  colorOptions: string[] = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Grey', 'Brown', 'Black', 'Teal'];
+  selectedRow: number | null = null;
+  errorMessage: string = '';
+  rows: number | null = null;
+  columns: number | null = null;
+  colorsInput: number | null = null;
+  inputErrorMessage: string = '';
 
+  validateInput(field: string): void {
+    if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {
+      this.inputErrorMessage = 'Rows must be between 1 and 1000.';
+      this.rows = null; // Clear the input
+    } else if (field === 'columns' && (this.columns === null || this.columns < 1 || this.columns > 702)) {
+      this.inputErrorMessage = 'Columns must be between 1 and 702.';
+      this.columns = null; // Clear the input
+    } else if (field === 'colors' && (this.colorsInput === null || this.colorsInput < 1 || this.colorsInput > 10)) {
+      this.inputErrorMessage = 'Colors must be between 1 and 10.';
+      this.colorsInput = null; // Clear the input
+    } else {
+      this.inputErrorMessage = ''; // Clear the error message if valid
+    }
+  }
+
+  generateTables(event: Event): void {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const colorsInput = form['colors'] as HTMLInputElement;
+
+    this.colors = parseInt(colorsInput.value, 10);
+
+    if (this.colors > 0) {
+      this.colorArray = this.colorOptions.slice(0, this.colors);
+      this.selectedRow = null;
+      this.errorMessage = ''; // Clear any previous error message
+    }
+  }
+
+  selectRow(index: number): void {
+    this.selectedRow = this.selectedRow === index ? null : index;
+  }
+
+  updateColor(index: number, event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedColor = selectElement.value;
+
+    // Check if the selected color is already in use by another row
+    if (this.colorArray.includes(selectedColor) && this.colorArray.indexOf(selectedColor) !== index) {
+      this.errorMessage = `The color "${selectedColor}" is already selected. Please choose a different color.`;
+      // Reset the dropdown to its previous value
+      selectElement.value = this.colorArray[index];
+    } else {
+      // Clear the error message and update the color for the specific row
+      this.errorMessage = '';
+      this.colorArray[index] = selectedColor;
+    }
+  }
+
+  isColorDisabled(color: string, currentIndex: number): boolean {
+    // Disable the color if it is already selected in another row
+    return this.colorArray.some((selectedColor, index) => selectedColor === color && index !== currentIndex);
+  }
 }

@@ -3,6 +3,7 @@
     padding: 20px;
     border-radius: 16px;
     margin-bottom: 20px;
+    border: 3px solid lightskyblue;
     box-shadow: 0 4px 8px lightskyblue;
 }
 
@@ -37,6 +38,19 @@
     text-align: center;
     cursor: pointer;
     border: 1px solid #010203;
+}
+
+.cell-selection {
+    width: 20%;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 3px solid lightskyblue;
+    box-shadow: 0 4px 8px lightskyblue;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 /* Styling for the second table */

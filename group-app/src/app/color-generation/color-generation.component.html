@@ -75,7 +75,7 @@
 <div *ngIf="tableData.length > 0">
   <!-- Display Selected Cell -->
   <div style="margin-bottom: 10px; font-weight: bold;" class="cell-selection">
-    Selected Cell: Row {{ selectedCell.row }}, Column {{ getColumnLabel(selectedCell.col) }}
+    Selected Cell: Row {{ selectedCell.row }}, Column {{ getColumnLabel(selectedCell.col) }} ---- {{ getColumnLabel(selectedCell.col) }}{{ selectedCell.row }}
   </div>
 
   <!-- Wrapper for the second table -->
@@ -86,7 +86,8 @@
           <td *ngFor="let cell of row; let j = index"
               (click)="selectCell(i, j)"
               [ngStyle]="{
-                'background-color': selectedCell.row === i && selectedCell.col === j ? '#14213d' : '#e5e5e5'
+                'background-color': i === 0 || j === 0 ? '#000000' : (selectedCell.row === i && selectedCell.col === j ? '#14213d' : '#e5e5e5'),
+                'color': i === 0 || j === 0 ? '#ffffff' : (selectedCell.row === i && selectedCell.col === j ? '#ffffff' : '#010203')
               }">
             {{ cell }}
           </td>

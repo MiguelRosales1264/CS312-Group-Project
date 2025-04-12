@@ -52,12 +52,42 @@ export class ColorGenerationComponent {
       this.errorMessage = ''; // Clear any previous error message
     }
 
-    this.tableData = Array.from({ length: this.rows! + 1}, () =>
-      Array.from({ length: this.columns! + 1}, () => '[]')
-    );
+    this.tableData = [];
+  for (let i = 0; i <= this.rows!; i++) {
+    const row: string[] = [];
+    for (let j = 0; j <= this.columns!; j++) {
+      if (i === 0 && j === 0) {
+        row.push(''); 
+      } else if (i === 0) {
+        // Column header (A, B, ..., Z, AA, AB, etc.)
+        row.push(this.getColumnLabel(j));
+      } else if (j === 0) {
+        // Row header (1, 2, ...)
+        row.push(i.toString());
+      } else {
+        row.push('[]');
+      }
+    }
+    this.tableData.push(row);
+  }
+
+  this.cellColors = Array.from({ length: this.rows! + 1 }, () =>
+    Array.from({ length: this.columns! + 1 }, () => 'white')
+  );
 
 
   }
+
+  getColumnLabel(n: number): string {
+    let label = '';
+    while (n > 0) {
+      const rem = (n - 1) % 26;
+      label = String.fromCharCode(65 + rem) + label;
+      n = Math.floor((n - 1) / 26);
+    }
+    return label;
+  }
+  
 
   selectRow(index: number): void {
     this.selectedRow = this.selectedRow === index ? null : index;

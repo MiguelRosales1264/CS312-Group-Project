@@ -1,7 +1,8 @@
 .about-header {
     text-align: center;
     font-size: 1.4rem;
-    background-color: lightgrey;
+    color: var(--dark-color);
+    background-color: var(--secondary-color);
     padding: 1rem;
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -23,12 +24,13 @@
 
 .person {
     display: flex;
-    background-color: coral;
+    background-color: var(--info-color);
     padding: 1rem;
     border-radius: 1rem;
     gap: 2rem;
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--dark-color);
 }
 
 .person>img {

@@ -65,7 +65,7 @@ export class ColorGenerationComponent {
           // Row header (1, 2, ...)
           row.push(i.toString());
         } else {
-          row.push('[]');
+          row.push('');
         }
       }
       this.tableData.push(row);

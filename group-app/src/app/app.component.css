@@ -1,5 +1,25 @@
-
 main {
     margin: 0 auto;
     padding: 1rem;
+}
+
+/* Print styles */
+@media print {
+    * {
+      -webkit-print-color-adjust: exact; /* Ensures colors are printed accurately */
+      print-color-adjust: exact; /* Standard property for compatibility */
+      filter: grayscale(100%); /* Converts everything to grayscale */
+    }
+  
+    #generatedTable td {
+      border: 1px solid black; /* Ensure table borders are visible in grayscale */
+    }
+
+    :host {
+        display: none; /* Hide the nav component during printing */
+    }
+  
+    button, nav {
+      display: none; /* Hide buttons and nav elements during printing */
+    }
 }

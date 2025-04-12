@@ -47,3 +47,24 @@
 #generatedTable td:hover {
     background-color: #e0f7fa; /* Light blue hover effect */
 }
+.print-logo {
+    width: 100px; /* Adjust the size of the logo */
+    height: auto;
+    margin-bottom: 20px; /* Add spacing below the logo */
+    display: none;
+}
+
+/* Print styles */
+@media print {
+    .print-logo {
+        display: block;
+    }
+
+    #generatedTable td {
+        border: 1px solid black; /* Ensure table borders are visible in grayscale */
+    }
+
+    button, .first-table, .dimension-input, .cell-selection {
+        display: none; /* Hide buttons and nav elements during printing */
+    }
+}

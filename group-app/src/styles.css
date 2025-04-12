@@ -36,5 +36,6 @@ body {
       print-color-adjust: exact; /* Standard property for compatibility */
       filter: grayscale(100%); /* Converts everything to grayscale */
       background-color: #fff !important; /* Sets background to white */
+      color: #000 !important; /* Sets text color to black */
     }
 }

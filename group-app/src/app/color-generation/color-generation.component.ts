@@ -20,6 +20,7 @@ export class ColorGenerationComponent {
   colorsInput: number | null = null;
   inputErrorMessage: string = '';
   tableData:string[][] = [];
+  selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
 
   validateInput(field: string): void {
     if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {
@@ -39,7 +40,6 @@ export class ColorGenerationComponent {
   cellColors: string[][] = [];
   
   generateTables(event: Event): void {
-
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const colorsInput = form['colors'] as HTMLInputElement;
@@ -52,30 +52,31 @@ export class ColorGenerationComponent {
       this.errorMessage = ''; // Clear any previous error message
     }
 
-    this.tableData = [];
-  for (let i = 0; i <= this.rows!; i++) {
-    const row: string[] = [];
-    for (let j = 0; j <= this.columns!; j++) {
-      if (i === 0 && j === 0) {
-        row.push(''); 
-      } else if (i === 0) {
-        // Column header (A, B, ..., Z, AA, AB, etc.)
-        row.push(this.getColumnLabel(j));
-      } else if (j === 0) {
-        // Row header (1, 2, ...)
-        row.push(i.toString());
-      } else {
-        row.push('[]');
+        this.tableData = [];
+    for (let i = 0; i <= this.rows!; i++) {
+      const row: string[] = [];
+      for (let j = 0; j <= this.columns!; j++) {
+        if (i === 0 && j === 0) {
+          row.push('');
+        } else if (i === 0) {
+          // Column header (A, B, ..., Z, AA, AB, etc.)
+          row.push(this.getColumnLabel(j));
+        } else if (j === 0) {
+          // Row header (1, 2, ...)
+          row.push(i.toString());
+        } else {
+          row.push('[]');
+        }
       }
+      this.tableData.push(row);
     }
-    this.tableData.push(row);
-  }
 
-  this.cellColors = Array.from({ length: this.rows! + 1 }, () =>
-    Array.from({ length: this.columns! + 1 }, () => 'white')
-  );
+    this.cellColors = Array.from({ length: this.rows! + 1 }, () =>
+      Array.from({ length: this.columns! + 1 }, () => 'white')
+    );
 
-
+    // Reset the selected cell to Row 1, Column A
+    this.selectedCell = { row: 1, col: 1 };
   }
 
   getColumnLabel(n: number): string {
@@ -120,6 +121,8 @@ export class ColorGenerationComponent {
     }
   }
   
-  
+  selectCell(row: number, col: number): void {
+    this.selectedCell = { row, col };
+  }
 
 }

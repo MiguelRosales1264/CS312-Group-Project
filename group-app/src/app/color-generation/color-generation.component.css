@@ -30,7 +30,20 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-#generatedTable td:hover {
-    background-color: #e0f7fa;
+
+/* Styling for the second table */
+#generatedTable {
+    border-collapse: collapse;
+}
+
+#generatedTable td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
     cursor: pointer;
-  }
+    border: 1px solid #010203;
+}
+
+#generatedTable td:hover {
+    background-color: #e0f7fa; /* Light blue hover effect */
+}

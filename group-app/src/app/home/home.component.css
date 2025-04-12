@@ -4,9 +4,11 @@
     align-items: center;
     text-align: center;
     padding: 20px;
-    background-color: lightgrey;
+    background-color: var(--secondary-color);
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--dark-color);
+    font-size: 1.5rem;
 }
 
 .home-logo img {

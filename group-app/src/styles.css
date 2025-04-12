@@ -9,5 +9,22 @@ body {
 }
 
 body {
-    background-color: whitesmoke;
+    background-color: #d62828;
+}
+
+:root {
+    /* Contrast Values || Need to be AT LEAST score of 7 */
+    /* Primary & Secondary = 7.9:1 */
+    /* Navbar -- Primary & Light Color = 14.14:1 */
+    /* On Headers -- Secondary & Dark Color = 10.27:1 */
+    /* On Person About -- Light Color & Info Color = 16.48:1 */
+    --primary-color: #14213d;
+    --secondary-color: #fca311;
+    --background-color: #d62828;
+    --success-color: #28a745;
+    --info-color: #e5e5e5;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #fdf0d5;
+    --dark-color: #010203;
 }

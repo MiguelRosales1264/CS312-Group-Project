@@ -35,7 +35,9 @@ body {
       -webkit-print-color-adjust: exact; /* Ensures colors are printed accurately */
       print-color-adjust: exact; /* Standard property for compatibility */
       filter: grayscale(100%); /* Converts everything to grayscale */
-      background-color: #fff !important; /* Sets background to white */
-      color: #000 !important; /* Sets text color to black */
+    }
+    
+    body {
+        background-color: #fff; /* Sets the background to white for printing */
     }
 }

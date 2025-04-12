@@ -13,12 +13,12 @@ body {
 }
 
 :root {
-    --primary-color: #007bff;
-    --secondary-color: gold;
+    --primary-color: #14213d;
+    --secondary-color: #fca311;
     --success-color: #28a745;
-    --info-color: #17a2b8;
+    --info-color: #e5e5e5;
     --warning-color: #ffc107;
     --danger-color: #dc3545;
-    --light-color: #f8f9fa;
+    --light-color: #fdf0d5;
     --dark-color: #343a40;
 }

@@ -14,10 +14,6 @@ main {
     #generatedTable td {
       border: 1px solid black; /* Ensure table borders are visible in grayscale */
     }
-
-    :host {
-        display: none; /* Hide the nav component during printing */
-    }
   
     button, nav {
       display: none; /* Hide buttons and nav elements during printing */

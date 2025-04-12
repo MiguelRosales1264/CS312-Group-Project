@@ -1,4 +1,6 @@
-<div id="values">
+<img src="/img/logo.jpg" alt="Logo" class="print-logo">
+
+<div id="values" class="dimension-input">
   <form (submit)="generateTables($event)">
       <!-- Row Input -->
     <label for="rows">Rows (1-1000)&nbsp; &nbsp; &nbsp;</label>
@@ -43,7 +45,7 @@
   </form>
 </div>
 
-<div *ngIf="colors > 0">
+<div *ngIf="colors > 0" class="first-table">
   <!-- First Table -->
   <table id = "colorsTable">
     <tbody>
@@ -72,7 +74,7 @@
 
 <div *ngIf="tableData.length > 0">
   <!-- Display Selected Cell -->
-  <div style="margin-bottom: 10px; font-weight: bold;">
+  <div style="margin-bottom: 10px; font-weight: bold;" class="cell-selection">
     Selected Cell: Row {{ selectedCell.row }}, Column {{ getColumnLabel(selectedCell.col) }}
   </div>
 

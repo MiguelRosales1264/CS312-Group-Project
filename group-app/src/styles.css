@@ -28,3 +28,11 @@ body {
     --light-color: #fdf0d5;
     --dark-color: #010203;
 }
+
+@media print {
+    * {
+      -webkit-print-color-adjust: exact; /* Ensures colors are printed accurately */
+      print-color-adjust: exact; /* Standard property for compatibility */
+      filter: grayscale(100%); /* Converts everything to grayscale */
+    }
+}

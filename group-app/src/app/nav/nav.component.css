@@ -55,3 +55,9 @@
     align-items: center;
     gap: 16px
 }
+
+@media print {
+    .nav {
+      display: none; /* Hide buttons and nav elements during printing */
+    }
+}

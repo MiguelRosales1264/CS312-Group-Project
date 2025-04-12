@@ -20,7 +20,7 @@ export class ColorGenerationComponent {
   colorsInput: number | null = null;
   inputErrorMessage: string = '';
   tableData:string[][] = [];
-  // selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
+  selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
 
   validateInput(field: string): void {
     if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {

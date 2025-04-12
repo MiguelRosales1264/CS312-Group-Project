@@ -14,6 +14,7 @@ body {
 
 :root {
     /* Contrast Values || Need to be AT LEAST score of 7 */
+    /* Foreground & Background (in that order) */
     /* Primary & Secondary = 7.9:1 */
     /* Navbar -- Primary & Light Color = 14.14:1 */
     /* On Headers -- Secondary & Dark Color = 10.27:1 */
@@ -34,5 +35,6 @@ body {
       -webkit-print-color-adjust: exact; /* Ensures colors are printed accurately */
       print-color-adjust: exact; /* Standard property for compatibility */
       filter: grayscale(100%); /* Converts everything to grayscale */
+      background-color: #fff !important; /* Sets background to white */
     }
 }

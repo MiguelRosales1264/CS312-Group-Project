@@ -125,4 +125,8 @@ export class ColorGenerationComponent {
     this.selectedCell = { row, col };
   }
 
+  printPage(): void {
+    window.print(); // Trigger the browser's print dialog
+  }
+
 }

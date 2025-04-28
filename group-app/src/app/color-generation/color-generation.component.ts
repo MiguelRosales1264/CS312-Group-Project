@@ -65,7 +65,7 @@ export class ColorGenerationComponent {
           // Row header (1, 2, ...)
           row.push(i.toString());
         } else {
-          row.push('[]');
+          row.push('');
         }
       }
       this.tableData.push(row);
@@ -76,7 +76,7 @@ export class ColorGenerationComponent {
     );
 
     // Reset the selected cell to Row 1, Column A
-    this.selectedCell = { row: 1, col: 1 };
+    this.selectedCell = { row: 0, col: 0 };
   }
 
   getColumnLabel(n: number): string {

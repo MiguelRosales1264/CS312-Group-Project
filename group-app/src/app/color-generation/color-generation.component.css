@@ -3,6 +3,7 @@
     padding: 20px;
     border-radius: 16px;
     margin-bottom: 20px;
+    border: 3px solid lightskyblue;
     box-shadow: 0 4px 8px lightskyblue;
 }
 
@@ -20,15 +21,36 @@
 
 .generate:hover {
     background-color: rgb(93, 160, 186);
+    cursor: pointer;
 }
 
 #colorsTable {
     width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
     background-color: lightgrey;
     border-collapse: collapse;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#colorsTable td input, #colorsTable td select {
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #010203;
+}
+
+.cell-selection {
+    width: 20%;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 3px solid lightskyblue;
+    box-shadow: 0 4px 8px lightskyblue;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 /* Styling for the second table */

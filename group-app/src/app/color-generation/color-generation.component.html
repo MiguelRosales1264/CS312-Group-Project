@@ -51,14 +51,14 @@
     <tbody>
       <tr *ngFor="let color of colorArray; let i = index">
         <!-- Left Column -->
-        <td style="width: 20%; border: 1px solid black;">
+        <td style="width: 20%; border: 1px solid black; padding: 10px;">
           <input
             type="radio"
             name="selectedRow"
             [value]="i"
             [checked]="selectedRow === i"
             (change)="selectRow(i)"
-          > Selected
+          >
           <select [(ngModel)]="colorArray[i]" (change)="updateColor(i, $event)">
             <option *ngFor="let option of colorOptions" [value]="option" [disabled]="isColorDisabled(option, i)">
               {{ option }}
@@ -66,7 +66,7 @@
           </select>
         </td>
         <!-- Right Column -->
-        <td style="width: 80%; border: 1px solid black;"></td>
+        <td style="width: 80%; border: 1px solid black; padding: 5px;"></td>
       </tr>
     </tbody>
   </table>
@@ -75,7 +75,7 @@
 <div *ngIf="tableData.length > 0">
   <!-- Display Selected Cell -->
   <div style="margin-bottom: 10px; font-weight: bold;" class="cell-selection">
-    Selected Cell: Row {{ selectedCell.row }}, Column {{ getColumnLabel(selectedCell.col) }}
+    Selected Cell: Row {{ selectedCell.row }}, Column {{ getColumnLabel(selectedCell.col) }} ---- {{ getColumnLabel(selectedCell.col) }}{{ selectedCell.row }}
   </div>
 
   <!-- Wrapper for the second table -->
@@ -86,7 +86,8 @@
           <td *ngFor="let cell of row; let j = index"
               (click)="selectCell(i, j)"
               [ngStyle]="{
-                'background-color': selectedCell.row === i && selectedCell.col === j ? '#14213d' : '#e5e5e5'
+                'background-color': i === 0 || j === 0 ? '#010203' : (selectedCell.row === i && selectedCell.col === j ? '#14213d' : '#e5e5e5'),
+                'color': i === 0 || j === 0 ? '#ffffff' : (selectedCell.row === i && selectedCell.col === j ? '#ffffff' : '#010203')
               }">
             {{ cell }}
           </td>

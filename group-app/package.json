@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start miguelrt": "ng serve --host boston.cs.colostate.edu --port 4367",
+    "start-miguelrt": "ng serve --host boston.cs.colostate.edu --port 4367",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

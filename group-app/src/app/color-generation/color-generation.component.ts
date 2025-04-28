@@ -20,7 +20,7 @@ export class ColorGenerationComponent {
   colorsInput: number | null = null;
   inputErrorMessage: string = '';
   tableData:string[][] = [];
-  selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
+  // selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
 
   validateInput(field: string): void {
     if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {
@@ -76,7 +76,7 @@ export class ColorGenerationComponent {
     );
 
     // Reset the selected cell to Row 1, Column A
-    this.selectedCell = { row: 1, col: 1 };
+    // this.selectedCell = { row: 1, col: 1 };
   }
 
   getColumnLabel(n: number): string {
@@ -122,7 +122,7 @@ export class ColorGenerationComponent {
   }
   
   selectCell(row: number, col: number): void {
-    this.selectedCell = { row, col };
+    // this.selectedCell = { row, col };
   }
 
   printPage(): void {

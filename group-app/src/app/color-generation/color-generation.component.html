@@ -86,7 +86,7 @@
           <td *ngFor="let cell of row; let j = index"
               (click)="selectCell(i, j)"
               [ngStyle]="{
-                'background-color': i === 0 || j === 0 ? '#010203' : (selectedCell.row === i && selectedCell.col === j ? '#14213d' : '#e5e5e5'),
+                'background-color': i === 0 || j === 0 ? '#010203' : (selectedCell.row === i && selectedCell.col === j ? '#e5e5e5' : '#e5e5e5'), 
                 'color': i === 0 || j === 0 ? '#ffffff' : (selectedCell.row === i && selectedCell.col === j ? '#ffffff' : '#010203')
               }">
             {{ cell }}

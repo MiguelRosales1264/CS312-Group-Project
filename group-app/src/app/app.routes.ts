@@ -19,6 +19,13 @@ export const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () => { 
             return import('./color-generation/color-generation.component').then(m => m.ColorGenerationComponent)},
+    },
+    {
+        path: 'manage-colors',
+        pathMatch: 'full',
+        loadComponent: () => { 
+            return import('./manage-colors/manage-colors.component').then(m => m.ManageColorsComponent);
+        },
     }
 ];
 

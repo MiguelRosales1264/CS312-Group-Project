@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorServices } from '../services/color-services.service';
-import { Color } from '../models/color.model';  
+import { ColorService } from './color.service';
+import { Color } from './color.model';  
 
 @Component({
   selector: 'app-manage-colors',
@@ -15,21 +15,22 @@ export class ManageColorsComponent implements OnInit {
   newColor: { name: string; hex: string } = { name: '', hex: '' };
   errorMessage: string = '';
 
-  constructor(private colorServices: ColorServices) { }
+  constructor(private colorService: ColorService) { }
 
   ngOnInit(): void {
     this.loadColors();
   }
 
   loadColors(): void {
-    this.colorServices.getColors().subscribe({
+    this.colorService.getColors().subscribe({
       next: (data: Color[]) => { this.colors = data; },
       error: () => { this.errorMessage = 'Error loading colors.'; }
     });
   }
 
   addColor() {
-    this.colorServices.addColor(this.newColor).subscribe({
+    const colorToAdd: Color = { id: 0, ...this.newColor }; // Assign a temporary id
+    this.colorService.addColor(colorToAdd).subscribe({
       next: (color: Color) => { 
         this.colors.push(color);
         this.newColor = { name: '', hex: '' }; // Reset the form
@@ -40,7 +41,7 @@ export class ManageColorsComponent implements OnInit {
 
   updateColor() {
     if (this.editColor) {
-      this.colorServices.updateColor(this.editColor).subscribe({
+      this.colorService.updateColor(this.editColor).subscribe({
         next: () => {
           this.editColor = null; // Reset the form
         },
@@ -55,7 +56,7 @@ export class ManageColorsComponent implements OnInit {
       return;
     }
 
-    this.colorServices.deleteColor(id).subscribe({
+    this.colorService.deleteColor(id).subscribe({
       next: () => {
         this.colors = this.colors.filter(color => color.id !== id);
       },

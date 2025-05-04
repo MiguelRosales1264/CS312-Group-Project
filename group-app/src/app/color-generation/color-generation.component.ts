@@ -84,6 +84,9 @@ export class ColorGenerationComponent {
 
     // Reset the selected cell to Row 1, Column A
     this.selectedCell = { row: 0, col: 0 };
+
+    // Reset color assignments
+    Object.keys(this.colorAssignments).forEach(color => { this.colorAssignments[color] = []; });
   }
 
   getColumnLabel(n: number): string {
@@ -132,13 +135,15 @@ export class ColorGenerationComponent {
     // Paint each cell with the new color
     cellsToUpdate.forEach(cellLabel => {
       const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
-      if (match) {
+      if (match && match.length === 2) {
         const [colLabel, row] = match;
         const col = this.getColumnIndex(colLabel);
         const rowIndex = parseInt(row, 10);
 
         // Update the cell's color in the cellColors array
-        this.cellColors[rowIndex][col] = newColor.toLowerCase();
+        if (rowIndex > 0 && col > 0) {
+          this.cellColors[rowIndex][col] = newColor.toLowerCase();
+        }
       }
     });
 
@@ -152,6 +157,7 @@ export class ColorGenerationComponent {
   }
 
   fillCell(row: number, col: number): void {
+    if (row === 0 || col === 0) return; // Ignore header cells
     if (this.selectedRow !== null && this.colorArray[this.selectedRow]) {
       const selectedColor = this.colorArray[this.selectedRow];
       const cellLabel = `${this.getColumnLabel(col)}${row}`;
@@ -170,6 +176,7 @@ export class ColorGenerationComponent {
   }
   
   selectCell(row: number, col: number): void {
+    if (row === 0 || col === 0) return; // Ignore header cells
     this.selectedCell = { row, col };
   }
 

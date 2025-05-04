@@ -105,4 +105,7 @@
     .first-table input[type="radio"] {
         visibility: hidden;
     }
+    #hexColor {
+        display: inline !important;
+    }
 }

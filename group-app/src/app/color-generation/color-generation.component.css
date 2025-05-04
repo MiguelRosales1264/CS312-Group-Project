@@ -96,6 +96,9 @@
     #generatedTable td {
         border: 1px solid black;
     }
+    #indivCell {
+        background-color: white !important;
+    }
     button, .dimension-input, .cell-selection {
         display: none;
     }

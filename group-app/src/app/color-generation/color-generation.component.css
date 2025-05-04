@@ -93,8 +93,8 @@
     .print-logo {
         display: block;
     }
-    #generatedTable td {
-        border: 1px solid black;
+    #generatedTable td, #colorsTable {
+        border: 2px solid black;
     }
     #indivCell {
         background-color: white !important;

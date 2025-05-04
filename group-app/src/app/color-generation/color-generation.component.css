@@ -40,6 +40,17 @@
     border: 1px solid #010203;
 }
 
+#colorsTable ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#colorsTable li {
+    font-size: 12px;
+    color: #333;
+}
+
 .cell-selection {
     width: 20%;
     background-color: lightgrey;
@@ -69,6 +80,7 @@
 #generatedTable td:hover {
     background-color: #e0f7fa; /* Light blue hover effect */
 }
+
 .print-logo {
     width: 100px; /* Adjust the size of the logo */
     height: auto;
@@ -81,15 +93,13 @@
     .print-logo {
         display: block;
     }
-
     #generatedTable td {
-        border: 1px solid black; /* Ensure table borders are visible in grayscale */
+        border: 1px solid black;
     }
-
     button, .dimension-input, .cell-selection {
-        display: none; /* Hide buttons and nav elements during printing */
+        display: none;
     }
     .first-table input[type="radio"] {
-        visibility: hidden; /* Hides the radio buttons but keeps their space */
+        visibility: hidden;
     }
 }

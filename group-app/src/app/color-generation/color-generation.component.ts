@@ -19,8 +19,17 @@ export class ColorGenerationComponent {
   columns: number | null = null;
   colorsInput: number | null = null;
   inputErrorMessage: string = '';
-  tableData:string[][] = [];
+  tableData: string[][] = [];
   selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
+  cellColors: string[][] = [];
+  colorAssignments: { [color: string]: string[] } = {}; // Tracks cells assigned to each color
+
+  // Initialize color assignments
+  constructor() {
+    this.colorOptions.forEach(color => {
+      this.colorAssignments[color] = [];
+    });
+  }
 
   validateInput(field: string): void {
     if (field === 'rows' && (this.rows === null || this.rows < 1 || this.rows > 1000)) {
@@ -37,8 +46,6 @@ export class ColorGenerationComponent {
     }
   }
 
-  cellColors: string[][] = [];
-  
   generateTables(event: Event): void {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -89,6 +96,13 @@ export class ColorGenerationComponent {
     return label;
   }
   
+  getColumnIndex(label: string): number {
+    let index = 0;
+    for (let i = 0; i < label.length; i++) {
+      index = index * 26 + (label.charCodeAt(i) - 65 + 1);
+    }
+    return index;
+  }
 
   selectRow(index: number): void {
     this.selectedRow = this.selectedRow === index ? null : index;
@@ -96,18 +110,40 @@ export class ColorGenerationComponent {
 
   updateColor(index: number, event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
-    const selectedColor = selectElement.value;
+    const newColor = selectElement.value;
+    const oldColor = this.colorArray[index];
 
-    // Check if the selected color is already in use by another row
-    if (this.colorArray.includes(selectedColor) && this.colorArray.indexOf(selectedColor) !== index) {
-      this.errorMessage = `The color "${selectedColor}" is already selected. Please choose a different color.`;
-      // Reset the dropdown to its previous value
-      selectElement.value = this.colorArray[index];
-    } else {
-      // Clear the error message and update the color for the specific row
-      this.errorMessage = '';
-      this.colorArray[index] = selectedColor;
-    }
+    // If the color hasn't changed, do nothing
+    if (newColor === oldColor) return;
+
+    // Update the color in the color array
+    this.colorArray[index] = newColor;
+
+    // Ensure the new color's list is initialized
+    this.colorAssignments[newColor] = this.colorAssignments[newColor] || [];
+
+    // Copy the old color's list of cells to the new color
+    const cellsToUpdate = [...(this.colorAssignments[oldColor] || [])];
+    this.colorAssignments[newColor].push(...cellsToUpdate);
+
+    // Clear the old color's list
+    this.colorAssignments[oldColor] = [];
+
+    // Paint each cell with the new color
+    cellsToUpdate.forEach(cellLabel => {
+      const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
+      if (match) {
+        const [colLabel, row] = match;
+        const col = this.getColumnIndex(colLabel);
+        const rowIndex = parseInt(row, 10);
+
+        // Update the cell's color in the cellColors array
+        this.cellColors[rowIndex][col] = newColor.toLowerCase();
+      }
+    });
+
+    // Sort the new color's list lexicographically
+    this.colorAssignments[newColor].sort();
   }
 
   isColorDisabled(color: string, currentIndex: number): boolean {
@@ -117,7 +153,19 @@ export class ColorGenerationComponent {
 
   fillCell(row: number, col: number): void {
     if (this.selectedRow !== null && this.colorArray[this.selectedRow]) {
-      this.cellColors[row][col] = this.colorArray[this.selectedRow].toLowerCase();
+      const selectedColor = this.colorArray[this.selectedRow];
+      const cellLabel = `${this.getColumnLabel(col)}${row}`;
+      Object.keys(this.colorAssignments).forEach(color => {
+        const index = this.colorAssignments[color].indexOf(cellLabel);
+        if (index !== -1) {
+          this.colorAssignments[color].splice(index, 1);
+        }
+      });
+      this.cellColors[row][col] = selectedColor.toLowerCase();
+      this.colorAssignments[selectedColor] = this.colorAssignments[selectedColor] || [];
+      this.colorAssignments[selectedColor].push(cellLabel);
+      this.colorAssignments[selectedColor].sort();
+      this.selectedCell = { row, col };
     }
   }
   

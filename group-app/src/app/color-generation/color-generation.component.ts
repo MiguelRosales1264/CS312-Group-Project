@@ -84,6 +84,9 @@ export class ColorGenerationComponent {
 
     // Reset the selected cell to Row 1, Column A
     this.selectedCell = { row: 0, col: 0 };
+
+    // Reset color assignments
+    Object.keys(this.colorAssignments).forEach(color => { this.colorAssignments[color] = []; });
   }
 
   getColumnLabel(n: number): string {

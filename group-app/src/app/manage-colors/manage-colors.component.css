@@ -1,5 +1,5 @@
 /* Style for the color list container */
-#color-list {
+#section {
   display: inline-block; /* Shrink to fit the contents */
   background-color: #f9f9f9; /* Off-white background */
   padding: 10px; /* Add some padding inside the container */
@@ -8,7 +8,7 @@
 }
 
 /* Reset padding and margin for the list */
-#color-list ul {
+#section ul {
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
   list-style: none; /* Remove bullet points */

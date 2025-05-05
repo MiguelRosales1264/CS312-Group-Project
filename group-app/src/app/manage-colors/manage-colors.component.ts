@@ -26,10 +26,12 @@ export class ManageColorsComponent {
 
   newColorName: string = ''; // Stores the input for the new color name
   newHexValue: string = ''; // Stores the input for the new hex value
+  addErrorMessage: string = ''; // Stores the error message for adding a color
   selectedColorToDelete: string = ''; // Stores the selected color to delete
   selectedColorToEdit: string = ''; // Stores the selected color to edit
   editColorName: string = ''; // Stores the new color name
   editHexValue: string = ''; // Stores the new hex value
+  deleteErrorMessage: string = ''; // Stores the error message for deletion
 
   // Function to add a new color
   addColor(name: string, hex: string): void {
@@ -39,19 +41,38 @@ export class ManageColorsComponent {
     );
 
     if (duplicate) {
-      console.error('A color with this name or hex value already exists.');
+      this.addErrorMessage = 'A color with this name or hex value already exists.';
+
+      // Automatically clear the error message after 7 seconds
+      setTimeout(() => {
+        this.addErrorMessage = '';
+      }, 7000);
+
       return;
     }
 
     // Add the new color to the list
     this.colorOptions.push({ name, hex });
     console.log(`Added color: ${name} (${hex})`);
-    this.newColorName = ''; // Reset input fields
+
+    // Reset the input fields
+    this.newColorName = '';
     this.newHexValue = '';
   }
 
   // Function to delete a color
   deleteColor(name: string): void {
+    if (this.colorOptions.length <= 2) {
+      this.deleteErrorMessage = 'You cannot delete a color when only two colors remain.';
+      
+      // Automatically clear the error message after 5 seconds
+      setTimeout(() => {
+        this.deleteErrorMessage = '';
+      }, 7000);
+
+      return;
+    }
+
     const initialLength = this.colorOptions.length;
 
     // Remove the color from the list
@@ -61,6 +82,7 @@ export class ManageColorsComponent {
       console.error(`Color "${name}" not found.`);
     } else {
       console.log(`Deleted color: ${name}`);
+      this.deleteErrorMessage = ''; // Clear the error message if deletion is successful
     }
   }
 

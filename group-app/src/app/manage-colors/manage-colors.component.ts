@@ -13,6 +13,7 @@ export class ManageColorsComponent implements OnInit {
   colors: Color[] = [];
   editColor: Color | null = null;
   newColor: { name: string; hex: string } = { name: '', hex: '' };
+  deleteId: number | null = null;
   errorMessage: string = '';
 
   constructor(private colorService: ColorService) { }

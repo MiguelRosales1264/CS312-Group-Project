@@ -8,23 +8,23 @@ import { Color } from './color.model'; // Adjust the import path as necessary
 })
 
 export class ColorService {
-    private apiUrl = 'api/colors';
+    private apiUrl = 'http://boston.cs.colostate.edu/~miguelrt/php-api';
 
     constructor(private http: HttpClient) {}
 
     getColors(): Observable<Color[]> {
-        return this.http.get<Color[]>(this.apiUrl);
+        return this.http.get<Color[]>(`${this.apiUrl}/get-colors.php`);
     }
 
-    addColor(color: Color): Observable<Color> {
-        return this.http.post<Color>(this.apiUrl, color);
+    addColor(color: Color): Observable<any> {
+        return this.http.post(`${this.apiUrl}/add-color.php`, color);
     }
 
-    updateColor(color: Color): Observable<Color> {
-        return this.http.put<Color>(`${this.apiUrl}/${color.id}`, color);
+    updateColor(color: Color): Observable<any> {
+        return this.http.post(`${this.apiUrl}/update-color.php`, color);
     }
 
-    deleteColor(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    deleteColor(id: number): Observable<any> {
+        return this.http.post(`${this.apiUrl}/delete-color.php`, { id });
     }
 }

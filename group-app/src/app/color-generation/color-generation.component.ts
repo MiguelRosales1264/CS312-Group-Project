@@ -23,11 +23,13 @@ export class ColorGenerationComponent {
   selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
   cellColors: string[][] = [];
   colorAssignments: { [color: string]: string[] } = {}; // Tracks cells assigned to each color
+  selectedColor: string[] = [];
 
   // Initialize color assignments
   constructor() {
     this.colorOptions.forEach(color => {
       this.colorAssignments[color] = [];
+      this.selectedColor = [...this.colorOptions];
     });
   }
 
@@ -114,40 +116,28 @@ export class ColorGenerationComponent {
   updateColor(index: number, event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const newColor = selectElement.value;
-    const oldColor = this.colorArray[index];
 
-    // If the color hasn't changed, do nothing
+    // Update the selected color for this dropdown
+    this.selectedColor[index] = newColor;
+
+    // Existing logic for updating color assignments
+    const oldColor = this.colorArray[index];
     if (newColor === oldColor) return;
 
-    // Update the color in the color array
     this.colorArray[index] = newColor;
-
-    // Ensure the new color's list is initialized
     this.colorAssignments[newColor] = this.colorAssignments[newColor] || [];
-
-    // Copy the old color's list of cells to the new color
     const cellsToUpdate = [...(this.colorAssignments[oldColor] || [])];
     this.colorAssignments[newColor].push(...cellsToUpdate);
-
-    // Clear the old color's list
     this.colorAssignments[oldColor] = [];
-
-    // Paint each cell with the new color
     cellsToUpdate.forEach(cellLabel => {
       const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
       if (match && match.length === 2) {
         const [colLabel, row] = match;
         const col = this.getColumnIndex(colLabel);
         const rowIndex = parseInt(row, 10);
-
-        // Update the cell's color in the cellColors array
-        if (rowIndex > 0 && col > 0) {
-          this.cellColors[rowIndex][col] = newColor.toLowerCase();
-        }
+        this.cellColors[rowIndex][col] = newColor.toLowerCase();
       }
     });
-
-    // Sort the new color's list lexicographically
     this.colorAssignments[newColor].sort();
   }
 

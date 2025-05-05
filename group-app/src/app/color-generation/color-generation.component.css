@@ -93,13 +93,19 @@
     .print-logo {
         display: block;
     }
-    #generatedTable td {
-        border: 1px solid black;
+    #generatedTable td, #colorsTable {
+        border: 2px solid black;
+    }
+    #indivCell {
+        background-color: white !important;
     }
     button, .dimension-input, .cell-selection {
         display: none;
     }
     .first-table input[type="radio"] {
         visibility: hidden;
+    }
+    #hexColor {
+        display: inline !important;
     }
 }

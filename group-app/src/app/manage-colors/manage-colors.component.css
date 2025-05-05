@@ -1,0 +1,31 @@
+/* Style for the color list container */
+#color-list {
+  display: inline-block; /* Shrink to fit the contents */
+  background-color: #f9f9f9; /* Off-white background */
+  padding: 10px; /* Add some padding inside the container */
+  border-radius: 5px; /* Slightly rounded corners */
+  border: 1px solid #ddd; /* Light border for better visibility */
+}
+
+/* Reset padding and margin for the list */
+#color-list ul {
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  list-style: none; /* Remove bullet points */
+}
+
+/* Style for the color list items */
+.color-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px; /* Add spacing between items */
+}
+
+/* Style for the color box */
+.color-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 1px solid black;
+}

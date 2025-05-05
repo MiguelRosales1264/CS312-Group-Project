@@ -64,6 +64,9 @@
               {{ option }}
             </option>
           </select>
+          <span id="hexColor" style="display: none;">
+            {{ selectedColor[i] }}
+          </span>
         </td>
         <!-- Right Column -->
         <td style="width: 80%; border: 1px solid black; padding: 5px;">
@@ -87,7 +90,7 @@
     <table id="generatedTable">
       <tbody>
         <tr *ngFor="let row of tableData; let i = index">
-          <td *ngFor="let cell of row; let j = index"
+          <td id="indivCell" *ngFor="let cell of row; let j = index"
               (click)="fillCell(i, j)"
               [ngStyle]="{
                 'background-color': cellColors[i][j]

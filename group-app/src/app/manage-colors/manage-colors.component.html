@@ -50,4 +50,7 @@
   <input id="editHexValue" type="text" [(ngModel)]="editHexValue" placeholder="Enter new hex value (e.g., #FF0000)">
   <br>
   <button (click)="editColor(selectedColorToEdit, editColorName, editHexValue)">Edit Color</button>
+  <div *ngIf="editErrorMessage" style="color: red; margin-top: 5px;">
+    {{ editErrorMessage }}
+  </div>
 </div>

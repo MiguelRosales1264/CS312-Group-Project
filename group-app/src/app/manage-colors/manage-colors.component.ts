@@ -32,6 +32,7 @@ export class ManageColorsComponent {
   editColorName: string = ''; // Stores the new color name
   editHexValue: string = ''; // Stores the new hex value
   deleteErrorMessage: string = ''; // Stores the error message for deletion
+  editErrorMessage: string = ''; // Stores the error message for editing a color
 
   // Function to add a new color
   addColor(name: string, hex: string): void {
@@ -47,7 +48,6 @@ export class ManageColorsComponent {
       setTimeout(() => {
         this.addErrorMessage = '';
       }, 7000);
-
       return;
     }
 
@@ -111,7 +111,13 @@ export class ManageColorsComponent {
     );
 
     if (duplicate) {
-      console.error('A color with this name or hex value already exists.');
+      this.editErrorMessage = 'A color with this name or hex value already exists.';
+      
+      // Automatically clear the error message after 7 seconds
+      setTimeout(() => {
+        this.editErrorMessage = '';
+      }, 7000);
+
       return;
     }
 

@@ -59,19 +59,19 @@
             [checked]="selectedRow === i"
             (change)="selectRow(i)"
           >
-          <select [(ngModel)]="colorArray[i]" (change)="updateColor(i, $event)">
-            <option *ngFor="let option of colorOptions" [value]="option" [disabled]="isColorDisabled(option, i)">
-              {{ option }}
+          <select [(ngModel)]="colorAssignments[i].color" (change)="updateColor(i, $event)">
+            <option *ngFor="let option of colorOptions" [value]="option.name" [disabled]="isColorDisabled(option.name, i)">
+              {{ option.name }}
             </option>
           </select>
           <span id="hexColor" style="display: none;">
-            {{ selectedColor[i] }}
+            {{ getHexValueByColor(colorAssignments[i]?.color || '') }}
           </span>
         </td>
         <!-- Right Column -->
         <td style="width: 80%; border: 1px solid black; padding: 5px;">
           <ul style="display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none;">
-            <li *ngFor="let cell of colorAssignments[color]">{{ cell }}</li>
+            <li *ngFor="let cell of colorAssignments[i].cells">{{ cell }}</li>
           </ul>
         </td>
       </tr>

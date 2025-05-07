@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,13 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './manage-colors.component.html',
   styleUrls: ['./manage-colors.component.css']
 })
-export class ManageColorsComponent {
+
+export class ManageColorsComponent implements OnInit {
+  ngOnInit(): void {
+    // Initialize the component with default values or perform setup logic
+    console.log('ManageColorsComponent initialized');
+  }
+  
   // List of colors with their associated hex values
   colorOptions: { name: string; hex: string }[] = [
     { name: 'Red', hex: '#FF0000' },
@@ -33,6 +39,10 @@ export class ManageColorsComponent {
   editHexValue: string = ''; // Stores the new hex value
   deleteErrorMessage: string = ''; // Stores the error message for deletion
   editErrorMessage: string = ''; // Stores the error message for editing a color
+  
+  newColor: { name: string; hex: string } = { name: '', hex: '' };
+  deleteId: number | null = null;
+  errorMessage: string = '';
 
   // Function to add a new color
   addColor(name: string, hex: string): void {

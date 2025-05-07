@@ -1,1 +1,56 @@
-<p>manage-colors works!</p>
+<h2>Current Colors</h2>
+<!-- Display the list of colors dynamically -->
+<div id="section">
+  <ul>
+    <li *ngFor="let color of colorOptions" class="color-item">
+      <span class="color-box" [style.background-color]="color.hex"></span>
+      {{ color.name }}
+    </li>
+  </ul>
+</div>
+
+<h2>Add Color</h2>
+<div id="section">
+  <label for="colorName">Color Name:</label>
+  <input id="colorName" type="text" [(ngModel)]="newColorName" placeholder="Enter color name">
+  <br>
+  <label for="hexValue">Hex Value:</label>
+  <input id="hexValue" type="text" [(ngModel)]="newHexValue" placeholder="Enter hex value (e.g., #FF0000)">
+  <br>
+  <button (click)="addColor(newColorName, newHexValue)">Add Color</button>
+  <div *ngIf="addErrorMessage" style="color: red; margin-top: 5px;">
+    {{ addErrorMessage }}
+  </div>
+</div>
+
+<h2>Delete Color</h2>
+<div id="section">
+  <label for="deleteColor">Select a Color to Delete:</label>
+  <select id="deleteColor" [(ngModel)]="selectedColorToDelete">
+    <option *ngFor="let color of colorOptions" [value]="color.name">{{ color.name }}</option>
+  </select>
+  <br>
+  <button (click)="deleteColor(selectedColorToDelete)">Delete Color</button>
+  <div *ngIf="deleteErrorMessage" style="color: red; margin-top: 5px;">
+    {{ deleteErrorMessage }}
+  </div>
+</div>
+
+<h2>Edit Color</h2>
+<div id="section">
+  <label for="editColor">Select a Color to Edit:</label>
+  <select id="editColor" [(ngModel)]="selectedColorToEdit" (change)="populateEditFields()">
+    <option *ngFor="let color of colorOptions" [value]="color.name">{{ color.name }}</option>
+  </select>
+  <br>
+  <label for="editColorName">New Color Name:</label>
+  <input id="editColorName" type="text" [(ngModel)]="editColorName" placeholder="Enter new color name">
+  <br>
+  <label for="editHexValue">New Hex Value:</label>
+  <input id="editHexValue" type="text" [(ngModel)]="editHexValue" placeholder="Enter new hex value (e.g., #FF0000)">
+  <br>
+  <button (click)="editColor(selectedColorToEdit, editColorName, editHexValue)">Edit Color</button>
+  <div *ngIf="editErrorMessage" style="color: red; margin-top: 5px;">
+    {{ editErrorMessage }}
+  </div>
+</div>

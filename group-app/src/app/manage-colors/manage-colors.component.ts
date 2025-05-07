@@ -1,75 +1,143 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorService } from './color.service';
-import { Color } from './color.model';  
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-colors',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './manage-colors.component.html',
-  styleUrl: './manage-colors.component.css'
+  styleUrls: ['./manage-colors.component.css']
 })
 
 export class ManageColorsComponent implements OnInit {
-  colors: Color[] = [];
-  editColor: Color | null = null;
+  ngOnInit(): void {
+    // Initialize the component with default values or perform setup logic
+    console.log('ManageColorsComponent initialized');
+  }
+  
+  // List of colors with their associated hex values
+  colorOptions: { name: string; hex: string }[] = [
+    { name: 'Red', hex: '#FF0000' },
+    { name: 'Orange', hex: '#FFA500' },
+    { name: 'Yellow', hex: '#FFFF00' },
+    { name: 'Green', hex: '#008000' },
+    { name: 'Blue', hex: '#0000FF' },
+    { name: 'Purple', hex: '#800080' },
+    { name: 'Grey', hex: '#808080' },
+    { name: 'Brown', hex: '#A52A2A' },
+    { name: 'Black', hex: '#000000' },
+    { name: 'Teal', hex: '#008080' }
+  ];
+
+  newColorName: string = ''; // Stores the input for the new color name
+  newHexValue: string = ''; // Stores the input for the new hex value
+  addErrorMessage: string = ''; // Stores the error message for adding a color
+  selectedColorToDelete: string = ''; // Stores the selected color to delete
+  selectedColorToEdit: string = ''; // Stores the selected color to edit
+  editColorName: string = ''; // Stores the new color name
+  editHexValue: string = ''; // Stores the new hex value
+  deleteErrorMessage: string = ''; // Stores the error message for deletion
+  editErrorMessage: string = ''; // Stores the error message for editing a color
+  
   newColor: { name: string; hex: string } = { name: '', hex: '' };
   deleteId: number | null = null;
   errorMessage: string = '';
 
-  constructor(private colorService: ColorService) { }
+  // Function to add a new color
+  addColor(name: string, hex: string): void {
+    // Check if the color name or hex value already exists
+    const duplicate = this.colorOptions.find(
+      color => color.name.toLowerCase() === name.toLowerCase() || color.hex.toLowerCase() === hex.toLowerCase()
+    );
 
-  ngOnInit(): void {
-    this.loadColors();
-  }
+    if (duplicate) {
+      this.addErrorMessage = 'A color with this name or hex value already exists.';
 
-  loadColors(): void {
-    this.colorService.getColors().subscribe({
-      next: (data: Color[]) => { this.colors = data; },
-      error: () => { this.errorMessage = 'Error loading colors.'; }
-    });
-  }
-
-  addColor() {
-    const colorToAdd: Color = { id: 0, ...this.newColor }; // Assign a temporary id
-    this.colorService.addColor(colorToAdd).subscribe({
-      next: (color: Color) => { 
-        this.colors.push(color);
-        this.newColor = { name: '', hex: '' }; // Reset the form
-      },
-      error: () => { this.errorMessage = 'Color name or hex already exists.'; }
-    })
-  }
-
-  updateColor() {
-    if (this.editColor) {
-      this.colorService.updateColor(this.editColor).subscribe({
-        next: () => {
-          this.editColor = null; // Reset the form
-        },
-        error: () => { this.errorMessage = 'Error updating color.'; }
-      });
-    }
-  }
-
-  deleteColor(id: number) {
-    if (this.colors.length <= 2) {
-      this.errorMessage = 'At least two colors are required.';
+      // Automatically clear the error message after 7 seconds
+      setTimeout(() => {
+        this.addErrorMessage = '';
+      }, 7000);
       return;
     }
 
-    this.colorService.deleteColor(id).subscribe({
-      next: () => {
-        this.colors = this.colors.filter(color => color.id !== id);
-      },
-      error: () => { this.errorMessage = 'Error deleting color.'; }
-    });
+    // Add the new color to the list
+    this.colorOptions.push({ name, hex });
+    console.log(`Added color: ${name} (${hex})`);
+
+    // Reset the input fields
+    this.newColorName = '';
+    this.newHexValue = '';
   }
 
-  startEdit(color: Color) {
-    this.editColor = { ...color }; // Create a copy of the color to edit
+  // Function to delete a color
+  deleteColor(name: string): void {
+    if (this.colorOptions.length <= 2) {
+      this.deleteErrorMessage = 'You cannot delete a color when only two colors remain.';
+      
+      // Automatically clear the error message after 5 seconds
+      setTimeout(() => {
+        this.deleteErrorMessage = '';
+      }, 7000);
+
+      return;
+    }
+
+    const initialLength = this.colorOptions.length;
+
+    // Remove the color from the list
+    this.colorOptions = this.colorOptions.filter(color => color.name.toLowerCase() !== name.toLowerCase());
+
+    if (this.colorOptions.length === initialLength) {
+      console.error(`Color "${name}" not found.`);
+    } else {
+      console.log(`Deleted color: ${name}`);
+      this.deleteErrorMessage = ''; // Clear the error message if deletion is successful
+    }
   }
-  
-  cancelEdit() {
-    this.editColor = null; // Reset the form
+
+  // Function to populate the edit fields with the selected color's details
+  populateEditFields(): void {
+    const colorToEdit = this.colorOptions.find(color => color.name === this.selectedColorToEdit);
+    if (colorToEdit) {
+      this.editColorName = colorToEdit.name;
+      this.editHexValue = colorToEdit.hex;
+    }
+  }
+
+  // Function to edit an existing color
+  editColor(oldName: string, newName: string, newHex: string): void {
+    const colorToEdit = this.colorOptions.find(color => color.name.toLowerCase() === oldName.toLowerCase());
+
+    if (!colorToEdit) {
+      console.error(`Color "${oldName}" not found.`);
+      return;
+    }
+
+    // Check if the new name or hex value conflicts with an existing color
+    const duplicate = this.colorOptions.find(
+      color => (color.name.toLowerCase() === newName.toLowerCase() || color.hex.toLowerCase() === newHex.toLowerCase()) &&
+               color.name.toLowerCase() !== oldName.toLowerCase()
+    );
+
+    if (duplicate) {
+      this.editErrorMessage = 'A color with this name or hex value already exists.';
+      
+      // Automatically clear the error message after 7 seconds
+      setTimeout(() => {
+        this.editErrorMessage = '';
+      }, 7000);
+
+      return;
+    }
+
+    // Update the color's name and hex value
+    colorToEdit.name = newName;
+    colorToEdit.hex = newHex;
+    console.log(`Edited color: ${oldName} -> ${newName} (${newHex})`);
+
+    // Clear the input fields
+    this.editColorName = '';
+    this.editHexValue = '';
   }
 }

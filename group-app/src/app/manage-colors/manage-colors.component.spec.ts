@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ManageColorsComponent } from './manage-colors.component';
 
 describe('ManageColorsComponent', () => {

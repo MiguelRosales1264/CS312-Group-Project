@@ -12,7 +12,18 @@ import { FormsModule } from '@angular/forms';
 export class ColorGenerationComponent {
   colors: number = 0;
   colorArray: string[] = [];
-  colorOptions: string[] = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Grey', 'Brown', 'Black', 'Teal'];
+  colorOptions: { id: number; name: string; hex: string }[] = [
+    { id: 1, name: 'Red', hex: '#FF0000' },
+    { id: 2, name: 'Orange', hex: '#FFA500' },
+    { id: 3, name: 'Yellow', hex: '#FFFF00' },
+    { id: 4, name: 'Green', hex: '#008000' },
+    { id: 5, name: 'Blue', hex: '#0000FF' },
+    { id: 6, name: 'Purple', hex: '#800080' },
+    { id: 7, name: 'Grey', hex: '#808080' },
+    { id: 8, name: 'Brown', hex: '#A52A2A' },
+    { id: 9, name: 'Black', hex: '#000000' },
+    { id: 10, name: 'Teal', hex: '#008080' }
+  ];
   selectedRow: number | null = null;
   errorMessage: string = '';
   rows: number | null = null;
@@ -22,13 +33,16 @@ export class ColorGenerationComponent {
   tableData: string[][] = [];
   selectedCell: { row: number; col: number } = { row: 0, col: 0 }; // Default to top-left corner
   cellColors: string[][] = [];
-  colorAssignments: { [color: string]: string[] } = {}; // Tracks cells assigned to each color
+  // colorAssignments: { [color: string]: string[] } = {}; // Tracks cells assigned to each color
+  colorAssignments: { color: string; hex: string; cells: string[] }[] = [];
+  selectedColor: string[] = [];
 
   // Initialize color assignments
   constructor() {
     this.colorOptions.forEach(color => {
-      this.colorAssignments[color] = [];
+      this.colorAssignments.push({ color: '', hex: 'hex',  cells: [] }); // Initialize with empty color
     });
+    this.selectedColor = [...this.colorOptions.map(option => option.name)]; // Extract names for the dropdown
   }
 
   validateInput(field: string): void {
@@ -54,7 +68,7 @@ export class ColorGenerationComponent {
     this.colors = parseInt(colorsInput.value, 10);
 
     if (this.colors > 0) {
-      this.colorArray = this.colorOptions.slice(0, this.colors);
+      this.colorArray = this.colorOptions.slice(0, this.colors).map(option => option.name);
       this.selectedRow = null;
       this.errorMessage = ''; // Clear any previous error message
     }
@@ -86,7 +100,9 @@ export class ColorGenerationComponent {
     this.selectedCell = { row: 0, col: 0 };
 
     // Reset color assignments
-    Object.keys(this.colorAssignments).forEach(color => { this.colorAssignments[color] = []; });
+    this.colorAssignments.forEach(assignment => {
+      assignment.cells = []; // Reset the cells array for each color
+    });
   }
 
   getColumnLabel(n: number): string {
@@ -114,46 +130,30 @@ export class ColorGenerationComponent {
   updateColor(index: number, event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const newColor = selectElement.value;
-    const oldColor = this.colorArray[index];
 
-    // If the color hasn't changed, do nothing
-    if (newColor === oldColor) return;
+    // Update the color in colorAssignments for the respective row
+    const assignment = this.colorAssignments[index];
+    if (assignment) {
+      assignment.color = newColor; // Update the color
+    }
 
-    // Update the color in the color array
-    this.colorArray[index] = newColor;
-
-    // Ensure the new color's list is initialized
-    this.colorAssignments[newColor] = this.colorAssignments[newColor] || [];
-
-    // Copy the old color's list of cells to the new color
-    const cellsToUpdate = [...(this.colorAssignments[oldColor] || [])];
-    this.colorAssignments[newColor].push(...cellsToUpdate);
-
-    // Clear the old color's list
-    this.colorAssignments[oldColor] = [];
-
-    // Paint each cell with the new color
-    cellsToUpdate.forEach(cellLabel => {
+    // Update the colors of the cells in the generated table
+    assignment.cells.forEach(cellLabel => {
       const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
       if (match && match.length === 2) {
         const [colLabel, row] = match;
         const col = this.getColumnIndex(colLabel);
         const rowIndex = parseInt(row, 10);
-
-        // Update the cell's color in the cellColors array
-        if (rowIndex > 0 && col > 0) {
-          this.cellColors[rowIndex][col] = newColor.toLowerCase();
-        }
+        this.cellColors[rowIndex][col] = newColor.toLowerCase(); // Paint the cell with the new color
       }
     });
-
-    // Sort the new color's list lexicographically
-    this.colorAssignments[newColor].sort();
   }
 
   isColorDisabled(color: string, currentIndex: number): boolean {
     // Disable the color if it is already selected in another row
-    return this.colorArray.some((selectedColor, index) => selectedColor === color && index !== currentIndex);
+    return this.colorAssignments.some((assignment, index) => {
+      return assignment.color === color && index !== currentIndex;
+    });
   }
 
   fillCell(row: number, col: number): void {
@@ -161,16 +161,23 @@ export class ColorGenerationComponent {
     if (this.selectedRow !== null && this.colorArray[this.selectedRow]) {
       const selectedColor = this.colorArray[this.selectedRow];
       const cellLabel = `${this.getColumnLabel(col)}${row}`;
-      Object.keys(this.colorAssignments).forEach(color => {
-        const index = this.colorAssignments[color].indexOf(cellLabel);
+
+      // Remove the cell from all other colors
+      this.colorAssignments.forEach(assignment => {
+        const index = assignment.cells.indexOf(cellLabel);
         if (index !== -1) {
-          this.colorAssignments[color].splice(index, 1);
+          assignment.cells.splice(index, 1);
         }
       });
+
+      // Add the cell to the selected color
+      const assignment = this.colorAssignments[this.selectedRow];
+      if (assignment) {
+        assignment.cells.push(cellLabel);
+      }
+
+      // Paint the cell in the generated table
       this.cellColors[row][col] = selectedColor.toLowerCase();
-      this.colorAssignments[selectedColor] = this.colorAssignments[selectedColor] || [];
-      this.colorAssignments[selectedColor].push(cellLabel);
-      this.colorAssignments[selectedColor].sort();
       this.selectedCell = { row, col };
     }
   }
@@ -182,6 +189,11 @@ export class ColorGenerationComponent {
 
   printPage(): void {
     window.print(); // Trigger the browser's print dialog
+  }
+
+  getHexValueByColor(name: string): string {
+    const colorOption = this.colorOptions.find(option => option.name === name);
+    return colorOption ? colorOption.hex : 'No hex value found';
   }
 
 }

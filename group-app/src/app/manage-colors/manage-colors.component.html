@@ -21,6 +21,9 @@
   <div *ngIf="addErrorMessage" style="color: red; margin-top: 5px;">
     {{ addErrorMessage }}
   </div>
+  <div *ngIf="hexAddErrorMessage" style="color: red; margin-top: 5px;">
+    {{ hexAddErrorMessage }}
+  </div>
 </div>
 
 <h2>Delete Color</h2>
@@ -52,5 +55,8 @@
   <button (click)="editColor(selectedColorToEdit, editColorName, editHexValue)">Edit Color</button>
   <div *ngIf="editErrorMessage" style="color: red; margin-top: 5px;">
     {{ editErrorMessage }}
+  </div>
+  <div *ngIf="hexEditErrorMessage" style="color: red; margin-top: 5px;">
+    {{ hexEditErrorMessage }}
   </div>
 </div>

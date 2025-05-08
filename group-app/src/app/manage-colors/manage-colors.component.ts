@@ -39,6 +39,9 @@ export class ManageColorsComponent implements OnInit {
   editHexValue: string = ''; // Stores the new hex value
   deleteErrorMessage: string = ''; // Stores the error message for deletion
   editErrorMessage: string = ''; // Stores the error message for editing a color
+  hexAddErrorMessage: string = ''; // Stores the error message for invalid hex input in add
+  hexEditErrorMessage: string = ''; // Stores the error message for invalid hex input in edit
+
   
   newColor: { name: string; hex: string } = { name: '', hex: '' };
   deleteId: number | null = null;
@@ -46,6 +49,13 @@ export class ManageColorsComponent implements OnInit {
 
   // Function to add a new color
   addColor(name: string, hex: string): void {
+    // Validate input
+    if (!this.isValidHex(hex)) {
+      this.hexAddErrorMessage = 'Not a hex value. Please check format';
+      setTimeout(() => (this.hexAddErrorMessage = ''), 5000);
+      return;
+    }
+
     // Check if the color name or hex value already exists
     const duplicate = this.colorOptions.find(
       color => color.name.toLowerCase() === name.toLowerCase() || color.hex.toLowerCase() === hex.toLowerCase()
@@ -107,6 +117,13 @@ export class ManageColorsComponent implements OnInit {
 
   // Function to edit an existing color
   editColor(oldName: string, newName: string, newHex: string): void {
+    // Validate input
+    if (!this.isValidHex(newHex)) {
+      this.hexEditErrorMessage = 'Not a hex value. Please check format';
+      setTimeout(() => (this.hexEditErrorMessage = ''), 5000);
+      return;
+    }
+
     const colorToEdit = this.colorOptions.find(color => color.name.toLowerCase() === oldName.toLowerCase());
 
     if (!colorToEdit) {
@@ -139,5 +156,10 @@ export class ManageColorsComponent implements OnInit {
     // Clear the input fields
     this.editColorName = '';
     this.editHexValue = '';
+  }
+
+  // Verify the input follows hex value format
+  isValidHex(hex: string): boolean {
+    return /^#([0-9A-F]{6}|[0-9A-F]{3})$/i.test(hex);
   }
 }

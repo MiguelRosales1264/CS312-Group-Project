@@ -125,26 +125,44 @@ export class ColorGenerationComponent {
 
   selectRow(index: number): void {
     this.selectedRow = this.selectedRow === index ? null : index;
-  }
+  
+    // Force color update when the row is selected
+    if (this.selectedRow !== null) {
+      const selectedColor = this.colorAssignments[this.selectedRow].color;
+      this.colorAssignments[this.selectedRow].cells.forEach(cellLabel => {
+        const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
+        if (match && match.length === 2) {
+          const [colLabel, row] = match;
+          const col = this.getColumnIndex(colLabel);
+          const rowIndex = parseInt(row, 10);
+  
+          this.cellColors[rowIndex][col] = selectedColor.toLowerCase(); 
+        }
+      });
+    }
+  } 
 
   updateColor(index: number, event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const newColor = selectElement.value;
-
-    // Update the color in colorAssignments for the respective row
+    
+    // Update the color for the selected row
     const assignment = this.colorAssignments[index];
     if (assignment) {
-      assignment.color = newColor; // Update the color
+      assignment.color = newColor;
+      assignment.hex = this.colorOptions.find(opt => opt.name === newColor)?.hex || '';
     }
-
-    // Update the colors of the cells in the generated table
+  
+    // Update the colors for the cells assigned to this row
     assignment.cells.forEach(cellLabel => {
       const match = cellLabel.match(/[A-Z]+|[0-9]+/g);
       if (match && match.length === 2) {
         const [colLabel, row] = match;
         const col = this.getColumnIndex(colLabel);
         const rowIndex = parseInt(row, 10);
-        this.cellColors[rowIndex][col] = newColor.toLowerCase(); // Paint the cell with the new color
+    
+        // Apply color to the selected row's cells
+        this.cellColors[rowIndex][col] = newColor.toLowerCase();
       }
     });
   }
@@ -157,11 +175,12 @@ export class ColorGenerationComponent {
   }
 
   fillCell(row: number, col: number): void {
-    if (row === 0 || col === 0) return; // Ignore header cells
-    if (this.selectedRow !== null && this.colorArray[this.selectedRow]) {
-      const selectedColor = this.colorArray[this.selectedRow];
+    if (row === 0 || col === 0) return;
+  
+    if (this.selectedRow !== null && this.colorAssignments[this.selectedRow]) {
+      const selectedColor = this.colorAssignments[this.selectedRow].color;
       const cellLabel = `${this.getColumnLabel(col)}${row}`;
-
+      
       // Remove the cell from all other colors
       this.colorAssignments.forEach(assignment => {
         const index = assignment.cells.indexOf(cellLabel);
@@ -169,18 +188,17 @@ export class ColorGenerationComponent {
           assignment.cells.splice(index, 1);
         }
       });
-
-      // Add the cell to the selected color
+  
       const assignment = this.colorAssignments[this.selectedRow];
       if (assignment) {
         assignment.cells.push(cellLabel);
       }
-
+  
       // Paint the cell in the generated table
       this.cellColors[row][col] = selectedColor.toLowerCase();
       this.selectedCell = { row, col };
     }
-  }
+  }  
   
   selectCell(row: number, col: number): void {
     if (row === 0 || col === 0) return; // Ignore header cells

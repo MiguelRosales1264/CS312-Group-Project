@@ -3,8 +3,8 @@
     padding: 20px;
     border-radius: 16px;
     margin-bottom: 20px;
-    border: 3px solid lightskyblue;
-    box-shadow: 0 4px 8px lightskyblue;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 8px var(--primary-color);
 }
 
 #rows, #columns, #colors {
@@ -14,7 +14,8 @@
 }
 
 .generate {
-    background-color: lightskyblue;
+    background-color: var(--primary-color);
+    color: var(--light-color);
     padding: 5px;
     border-radius: 10px;
 }
@@ -57,8 +58,8 @@
     padding: 20px;
     border-radius: 16px;
     margin-bottom: 20px;
-    border: 3px solid lightskyblue;
-    box-shadow: 0 4px 8px lightskyblue;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 8px var(--primary-color);
     align-items: center;
     justify-content: center;
     text-align: center;

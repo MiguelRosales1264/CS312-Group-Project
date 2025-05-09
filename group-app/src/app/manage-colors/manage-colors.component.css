@@ -1,10 +1,10 @@
 /* Style for the color list container */
 #section {
   display: inline-block; /* Shrink to fit the contents */
-  background-color: #f9f9f9; /* Off-white background */
+  background-color: lightgrey; /* Off-white background */
   padding: 10px; /* Add some padding inside the container */
   border-radius: 5px; /* Slightly rounded corners */
-  border: 1px solid #ddd; /* Light border for better visibility */
+  border: 3px solid color(var(--primary-color)); /* Light border for better visibility */
 }
 
 /* Reset padding and margin for the list */
@@ -28,7 +28,7 @@
   height: 20px;
   display: inline-block;
   border: 1px solid black;
-
+}
 
 .container {
     max-width: 600px;
@@ -56,4 +56,13 @@ button {
     background-color: #ffe6e6;
     padding: 10px;
     margin-top: 20px;
+}
+
+h2 {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: 7px;
+  border-radius: 1rem;
+  margin-right: 75%;
+  text-align: center;
 }

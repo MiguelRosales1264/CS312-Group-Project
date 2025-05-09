@@ -2,18 +2,18 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-$conn = new mysqli("localhost", "your_user", "your_pass", "your_db");
+$conn = new mysqli("faure", "miguelrt", "835297702", "miguelrt");
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(["error" => "Database connection failed"]));
 }
-$sql = "SELECT * FROM colors";
-$result = $conn->query($sql);
+
+$result = $conn->query("SELECT * FROM colors ORDER BY name ASC");
+
 $colors = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $colors[] = $row;
-    }
+while ($row = $result->fetch_assoc()) {
+    $colors[] = $row;
 }
-$conn->close();
+
 echo json_encode($colors);
+$conn->close();
 ?>

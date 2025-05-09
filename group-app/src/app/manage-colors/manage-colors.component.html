@@ -13,7 +13,7 @@
 <div id="section">
   <label for="colorName">Color Name:</label>
   <input id="colorName" type="text" [(ngModel)]="newColorName" placeholder="Enter color name">
-  <br>
+  <br><br>
   <label for="hexValue">Hex Value:</label>
   <input id="hexValue" type="text" [(ngModel)]="newHexValue" placeholder="Enter hex value (e.g., #FF0000)">
   <br>
@@ -45,10 +45,10 @@
   <select id="editColor" [(ngModel)]="selectedColorToEdit" (change)="populateEditFields()">
     <option *ngFor="let color of colorOptions" [value]="color.name">{{ color.name }}</option>
   </select>
-  <br>
+  <br><br>
   <label for="editColorName">New Color Name:</label>
   <input id="editColorName" type="text" [(ngModel)]="editColorName" placeholder="Enter new color name">
-  <br>
+  <br><br>
   <label for="editHexValue">New Hex Value:</label>
   <input id="editHexValue" type="text" [(ngModel)]="editHexValue" placeholder="Enter new hex value (e.g., #FF0000)">
   <br>

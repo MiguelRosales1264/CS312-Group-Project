@@ -10,7 +10,7 @@
 #rows, #columns, #colors {
     padding: 2px;
     border-radius: 10px;
-    border-color: lightskyblue;
+    border-color: var(--primary-color);
 }
 
 .generate {
